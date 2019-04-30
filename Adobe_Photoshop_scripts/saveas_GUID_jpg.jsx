@@ -1,5 +1,6 @@
 /************************************************************************
-Save an image as an unique [GUID].jpg in the script's parent directory
+Adobe Photoshop Script: Save an image as an unique [GUID].jpg in the 
+script's parent directory
  ***********************************************************************/
 
 var save_path = File($.fileName).parent + "/";
