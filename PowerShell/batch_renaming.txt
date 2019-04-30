@@ -1,0 +1,3 @@
+# Rename files to prefix%03d.extension format
+
+$prefix = ""; $id = 0; Get-ChildItem *.prefix | ForEach { Rename-Item -LiteralPath $_.fullname -NewName ($prefix + '{0:D3}' -f $id++ + $_.extension) }
