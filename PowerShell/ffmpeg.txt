@@ -1,0 +1,9 @@
+# concatenate all videos in the current directory
+
+Get-ChildItem  *.avi | ForEach {"file '" + $_.Name + "'" >> "mylist.txt"}; ffmpeg -f concat -i mylist.txt -c copy output.avi; Remove
+
+New-Item -ItemType file mylist.txt;
+$list = Get-ChildItem mylist.txt;
+Get-ChildItem  *.avi | ForEach {$a = "file '" + $_.Name + "'"; Add-Content $list $a};
+ffmpeg -f concat -i mylist.txt -c copy output.avi
+Remove-Item $list
