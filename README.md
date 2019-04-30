@@ -3,7 +3,7 @@
 ## List of Utilites
 
 - Machine Learning
-    - svm/**svm.py** train and save svm classifier
+    - *svm/**svm.py*** &nbsp;&nbsp; train and save svm classifier
 - Adobe Photoshop Scripts
-    - **saveas_GUID_jpg.jsx** save image to GUID.jpg in the directory where the script is placed 
+    - ***saveas_GUID_jpg.jsx*** &nbsp;&nbsp; save image to GUID.jpg in the directory where the script is placed 
     
