@@ -2,11 +2,8 @@
 
 ## List of Utilites
 
-    .
-    ├── build                   # Compiled files (alternatively `dist`)
-    ├── docs                    # Documentation files (alternatively `doc`)
-    ├── src                     # Source files (alternatively `lib` or `app`)
-    ├── test                    # Automated tests (alternatively `spec` or `tests`)
-    ├── tools                   # Tools and utilities
-    ├── LICENSE
-    └── README.md
+- Machine Learning
+    - *svm/**svm.py*** &nbsp;&nbsp; train and save svm classifier
+- Adobe Photoshop Scripts
+    - ***saveas_GUID_jpg.jsx*** &nbsp;&nbsp; save image to GUID.jpg in the directory where the script is placed 
+    
