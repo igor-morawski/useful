@@ -1,6 +1,5 @@
 # useful-scripts
 
-## List of Utilites
 
 - Machine Learning
     - *svm/**svm.py*** &nbsp;&nbsp; train and save svm classifier
