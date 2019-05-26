@@ -1,0 +1,11 @@
+#compare chosen files
+(Get-FileHash $fileA).hash -eq (Get-FileHash $fileB).hash
+
+#http://www.readonlymaio.org/rom/2017/10/09/finding-duplicated-identical-files-with-powershell-the-fast-way/
+#find duplicated files and...
+#move to C:\duplicates
+gci -file -recurse | Group-Object Length | Where-Object { $_.Count -gt 1 } | select -ExpandProperty group | foreach {get-filehash -literalpath $_.fullname} | group -property hash | where { $_.count -gt 1 } | foreach { $_.group | select -skip 1 } | select -ExpandProperty path | foreach {Move-Item -LiteralPath $_ -Destination C:\duplicates}
+#remove
+gci -file -recurse | Group-Object Length | Where-Object { $_.Count -gt 1 } | select -ExpandProperty group | foreach {get-filehash -literalpath $_.fullname} | group -property hash | where { $_.count -gt 1 } | foreach { $_.group | select -skip 1 } | select -ExpandProperty path | foreach {Remove-Item -LiteralPath $_ }
+
+
