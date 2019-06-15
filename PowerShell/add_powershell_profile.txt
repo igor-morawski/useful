@@ -1,7 +1,6 @@
 # touch profile file if none exists
-if (!(Test-Path -Path $PROFILE ))
-{ New-Item -Type File -Path $PROFILE -Force }
-
+# if (!(Test-Path -Path $PROFILE ))
+# { New-Item -Type File -Path $PROFILE -Force }
 # modify the File
 # ...
 # ...
@@ -12,10 +11,17 @@ if (!(Test-Path -Path $PROFILE ))
 # ...
 # ...
 
+# If you never did that you need to create self-signed certificate
+#
+# $_ = Get-ExecutionPolicy; if ($_ -eq "Restricted") {Set-ExecutionPolicy AllSigned}
+# New-SelfSignedCertificate -CertStoreLocation cert:\currentuser\my ` -Subject "CN=Local Code Signing" ` -KeyAlgorithm RSA ` -KeyLength 2048 ` -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" ` -KeyExportPolicy Exportable ` -KeyUsage DigitalSignature ` -Type CodeSigningCert
+# certmgr /s my 
+# # Personal > Certificates
+# # Copy "Local Code Signing" into Trusted Root Certification Authorities and into Trusted Publishers
 
-$_ = Get-ExecutionPolicy; if ($_ -eq "Restricted") {Set-ExecutionPolicy AllSigned}
+Paste into "Trusted Root Certification Authorities" and into "Trusted Publishers" stores.
 
-#New-SelfSignedCertificate -CertStoreLocation cert:\currentuser\my ` -Subject "CN=Local Code Signing" ` -KeyAlgorithm RSA ` -KeyLength 2048 ` -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" ` -KeyExportPolicy Exportable ` -KeyUsage DigitalSignature ` -Type CodeSigningCert
 
 $cert=(dir cert:currentuser\my\ -CodeSigningCert)
+# Set-AuthenticodeSignature -FilePath <profile_path> -Certificate $cert
 Set-AuthenticodeSignature -FilePath $Profile -Certificate $cert
