@@ -12,7 +12,10 @@ if (!(Test-Path -Path $PROFILE ))
 # ...
 # ...
 
+
 $_ = Get-ExecutionPolicy; if ($_ -eq "Restricted") {Set-ExecutionPolicy AllSigned}
+
+#New-SelfSignedCertificate -CertStoreLocation cert:\currentuser\my ` -Subject "CN=Local Code Signing" ` -KeyAlgorithm RSA ` -KeyLength 2048 ` -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" ` -KeyExportPolicy Exportable ` -KeyUsage DigitalSignature ` -Type CodeSigningCert
 
 $cert=(dir cert:currentuser\my\ -CodeSigningCert)
 Set-AuthenticodeSignature -FilePath $Profile -Certificate $cert
