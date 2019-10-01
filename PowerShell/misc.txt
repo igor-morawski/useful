@@ -1,0 +1,19 @@
+#segregate files in 
+
+$file = "train.csv"
+$col = "label"
+
+$train_dir = "train_images"
+
+$out = "out"
+
+$csv = Import-Csv $file
+
+$values = $csv.$col
+
+$ints = $values | Foreach-Object { [int]$_} | Select-Object -unique
+
+new-item -type directory -path $out -Force
+ForEach ($_ in $ints) {New-Item -ItemType directory -Path $out -Name $_.ToString() -Force}
+
+ForEach ($row in $csv) {If(Test-Path -Path $($train_dir+"\"+$row.ID)){Move-Item -Path $($train_dir+"\"+$row.ID) -Destination $($out+"\"+$row.Label+"\"+$row.ID)}}
