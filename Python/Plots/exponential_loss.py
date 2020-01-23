@@ -33,10 +33,12 @@ for ax in (ax1, ax2):
     ax.set(ylabel='loss')
     ax.set(xlabel='time (frames)')
     ax.set_yticklabels([])
-    ax.axvline(x=T, color='r')
+    ax.axvline(x=T, color='r', label='accident')
+    ax.legend()
 
 ax1.set_ylim(0, 3.5)
 ax1.fill_between(x, 0, el, facecolor='k')
 ax2.fill_between(x, 0, eel, facecolor='k')
+
 
 plt.show()
