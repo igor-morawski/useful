@@ -28,3 +28,17 @@ Get-ChildItem *.$extension -recurse | ForEach {$fn = [io.path]::GetFileNameWitho
 $extension = "gif"
 $new_extension = "mp4"
 Get-ChildItem *.$extension -recurse | ForEach {$fn = [io.path]::GetFileNameWithoutExtension($_.FullName); $input_fp = $_.FullName; $output_fp = (join-path $_.DirectoryName $fn"."$new_extension); ffmpeg -i $input_fp -movflags faststart -pix_fmt yuv420p -vf "scale=100*trunc(iw/2)*2:100*trunc(ih/2)*2:flags=neighbor" $output_fp}
+
+#cut one video to many videos according to timestamps and the associated output file name
+#add -c copy if you need speed (but some frames will be messed up), otherwise the command is as follows
+$input = "input.mp4"
+$timestamps = (("0:54", "1:12", "output1.mp4"), ("1:12", "1:17", "output2.mp4"))
+Foreach ($tuple in $timestamps) {
+	$start, $end, $fn = $tuple
+	$cmd = "ffmpeg -t {2} -i {0} -ss {1} {3}" -f $input, $start, $end, $fn
+	$cmd
+	Invoke-Expression -Command $cmd
+}
+
+
+

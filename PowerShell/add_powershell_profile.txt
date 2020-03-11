@@ -1,27 +1,27 @@
-# touch profile file if none exists
-# if (!(Test-Path -Path $PROFILE ))
-# { New-Item -Type File -Path $PROFILE -Force }
-# modify the File
-# ...
-# ...
-# ...
-# ...
-# ...
-# ...
-# ...
-# ...
 
-# If you never did that you need to create self-signed certificate
-#
-# $_ = Get-ExecutionPolicy; if ($_ -eq "Restricted") {Set-ExecutionPolicy AllSigned}
-# New-SelfSignedCertificate -CertStoreLocation cert:\currentuser\my ` -Subject "CN=Local Code Signing" ` -KeyAlgorithm RSA ` -KeyLength 2048 ` -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" ` -KeyExportPolicy Exportable ` -KeyUsage DigitalSignature ` -Type CodeSigningCert
-# certmgr /s my 
-# # Personal > Certificates
-# # Copy "Local Code Signing" into Trusted Root Certification Authorities and into Trusted Publishers
+#region conda initialize
+# !! Contents within this block are managed by 'conda init' !!
+(& "C:\Anaconda3\Scripts\conda.exe" "shell.powershell" "hook") | Out-String | Invoke-Expression
+#endregion
 
-Paste into "Trusted Root Certification Authorities" and into "Trusted Publishers" stores.
+#Set-Location -Path D:\Igor\Documents\github
+Function github {Set-Location -Path D:\Igor\Documents\github; ls}
+Function commit {git add *; git commit}
+Function alarm {[console]::beep(500,300);[console]::beep(1000,300);[console]::beep(500,300);[console]::beep(1000,300);[console]::beep(500,300);[console]::beep(1000,300);[console]::beep(500,300);[console]::beep(1000,300);[console]::beep(500,300);[console]::beep(1000,300);[console]::beep(500,300);[console]::beep(1000,300);}
 
+Write-Host "  _____                           _          _ _ 
+ |  __ \                         | |        | | |             _.-;;-._
+ | |__) |____      _____ _ __ ___| |__   ___| | |      '-..-'|   ||   |
+ |  ___/ _ \ \ /\ / / _ \ '__/ __| '_ \ / _ \ | |      '-..-'|_.-;;-._|
+ | |  | (_) \ V  V /  __/ |  \__ \ | | |  __/ | |      '-..-'|   ||   |
+ |_|   \___/ \_/\_/ \___|_|  |___/_| |_|\___|_|_|      '-..-'|_.-''-._|
+                                                 
+                                                 "  -ForegroundColor Yellow
 
-$cert=(dir cert:currentuser\my\ -CodeSigningCert)
-# Set-AuthenticodeSignature -FilePath <profile_path> -Certificate $cert
-Set-AuthenticodeSignature -FilePath $Profile -Certificate $cert
+$ps_dir = Split-Path $PROFILE -Parent 
+$recent_fp = Join-Path -Path $ps_dir -ChildPath "recent.txt"
+Function recent {Set-Location -Path (Get-Content $recent_fp); ls}
+Function set-recent {Set-Content -Path $recent_fp (Get-Location).Path}
+if (!(Test-Path $recent_fp)) {New-Item -itemType File -Path $recent_fp; set-recent}
+
+recent
