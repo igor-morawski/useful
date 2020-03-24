@@ -29,6 +29,13 @@ $extension = "gif"
 $new_extension = "mp4"
 Get-ChildItem *.$extension -recurse | ForEach {$fn = [io.path]::GetFileNameWithoutExtension($_.FullName); $input_fp = $_.FullName; $output_fp = (join-path $_.DirectoryName $fn"."$new_extension); ffmpeg -i $input_fp -movflags faststart -pix_fmt yuv420p -vf "scale=100*trunc(iw/2)*2:100*trunc(ih/2)*2:flags=neighbor" $output_fp}
 
+#resize + overlay frame number & id
+$extension = "gif"
+$new_extension = "mp4"
+$k = 100
+Get-ChildItem *.$extension -recurse | ForEach {$fn = [io.path]::GetFileNameWithoutExtension($_.FullName); $input_fp = $_.FullName; $output_fp = (join-path $_.DirectoryName $fn"."$new_extension); $id =  ($fn -split "ID")[-1];
+ffmpeg -i $input_fp -movflags faststart -pix_fmt yuv420p -vf "scale=$k*trunc(iw/2)*2:$k*trunc(ih/2)*2:flags=neighbor, drawtext=fontfile=Arial.ttf: text='%{frame_num}': start_number=1: x=(w-tw)/2: y=h-(2*lh): fontcolor=black: fontsize=$k*2: box=1: boxcolor=white: boxborderw=5, drawtext=fontfile=Arial.ttf: text='$id': start_number=1: x=(w-tw)/2: y=lh: fontcolor=black: fontsize=$k*2: box=1: boxcolor=white: boxborderw=5" $output_fp}
+
 #cut one video to many videos according to timestamps and the associated output file name
 #add -c copy if you need speed (but some frames will be messed up), otherwise the command is as follows
 $input = "input.mp4"
