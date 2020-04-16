@@ -74,5 +74,5 @@ while IFS= read -r line || [ -n "$line" ];
         else
             output="$3.mp4"
         fi
-        ffmpeg -t $2 -i $video -ss $1 $output
+        ffmpeg -n -t $2 -i $video -ss $1 $output </dev/null
 done < $txt
