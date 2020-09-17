@@ -1,0 +1,3 @@
+
+# ls Python modules, shave off extension, and concatenate. (fast import check)
+echo `ls *.py`|sed 's/.py /,/g'
