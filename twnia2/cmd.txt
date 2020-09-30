@@ -1,3 +1,6 @@
 
 # ls Python modules, shave off extension, and concatenate. (fast import check)
 echo `ls *.py`|sed 's/.py /,/g'
+
+# ls files common in two directories
+comm -12 <(ls a) <(ls b)
